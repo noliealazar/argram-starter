@@ -68,6 +68,78 @@ export async function handle(state, action) {
   }
 
   else {
-    throw new ContractError('Unrecognised function \"' + input.function + '\"');
+    throw new ContractError('Unrecognised function \\"' + input.function + '\\"');
   }
+  
+actions = [ (sum, 1), (sum, 2), (sum, 3) ]
+initState = 0
+
+async function handle (state, action) {
+    if (function === 'sum') {
+        state = state + input
+    }
 }
+// src/pages/start.svelte
+
+<script>
+    import { profile } from "../store.js";
+  import { Othent } from "permawebjs/auth";
+
+    async function handleConnect() {
+    // write code for handling connection with app
+  }
+</script>
+
+<!-- landing page ui -->
+  
+// src/pages/start.svelte
+<script>
+// imports
+
+async function handleConnect() {
+    $profile = await Othent.logIn();
+}
+</script>
+
+<!-- landing page ui -->
+
+ // src/pages/start.svelte
+
+<button class="btn btn-primary" on:click={handleConnect}>Connect</button>
+
+// src/components/navbar.svelte
+
+<script>
+import { profile } from "../store.js";
+import { Othent } from "permawebjs/auth";
+
+$: name = $profile ? $profile.given_name + " " + $profile.family_name : "";
+
+  async function handleConnect() {
+    $profile = await Othent.logIn();
+  }
+
+  async function handleDisconnect() {
+    await Othent.logOut();
+    $profile = null;
+  }
+</script> 
+
+<!-- navbar component ui -->
+
+{#if $profile}
+  <!-- displays connected user's name from variable 'name' -->
+  <!-- doubles as the log out button calling handle disconnect on click -->
+  <button class="btn btn-ghost" on:click={handleDisconnect}>{name}</button>
+{:else}
+  <!-- connect button to handle log in -->
+  <button on:click={handleConnect} class="btn btn-ghost">Connect</button>
+{/if}
+
+# Command Line
+
+npm run dev
+
+#or
+
+yarn dev
